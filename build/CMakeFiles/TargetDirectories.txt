@@ -1,0 +1,3 @@
+/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/build/CMakeFiles/hw02.dir
+/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/build/CMakeFiles/edit_cache.dir
+/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/build/CMakeFiles/rebuild_cache.dir

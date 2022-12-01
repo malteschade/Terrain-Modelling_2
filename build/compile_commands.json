@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/build",
+  "command": "/usr/bin/clang++   -g -arch x86_64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/hw02.dir/src/DatasetASC.cpp.o -c \"/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/cpp/src/DatasetASC.cpp\"",
+  "file": "/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/cpp/src/DatasetASC.cpp"
+},
+{
+  "directory": "/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/build",
+  "command": "/usr/bin/clang++   -g -arch x86_64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/hw02.dir/src/main.cpp.o -c \"/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/cpp/src/main.cpp\"",
+  "file": "/Users/malteschade/Desktop/Terrain Modelling/code/week3/geo1015.2022/hw/02/cpp/src/main.cpp"
+}
+]
