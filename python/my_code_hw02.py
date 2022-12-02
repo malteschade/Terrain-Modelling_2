@@ -73,7 +73,7 @@ def is_sunny(dataset, px, py, dt):
     px_t, py_t = transfo.transform(px, py)
 
     # calculate sun position
-    pos_sun = suncalc.get_position(time_utc, px_t, py_t)
+    pos_sun = suncalc.get_position(time_utc, px_t, py_t) # very different results to online ressources! 
     
     # read z-data into numpy array
     data = dataset.read(1)
