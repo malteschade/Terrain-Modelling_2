@@ -52,6 +52,16 @@ def is_sunny(dataset, px, py, dt):
            (raise Exception if p is outside the extent of the dataset)
            (raise Exception if p is no_data value)
     """
+    # get index of raster cell that contains view point
+    pr = dataset.index(px, py)
+
+    # check if view point is inside raster extend
+    if (pr[0] >= dataset.height) | (pr[1] >= dataset.width) | (pr[0] < 0) | (pr[1] < 0):
+        raise Exception("Point given is outside the extent of the dataset")
+    
+    # raster has no data at view point
+    if dataset.dataset_mask()[pr] == 0:
+        raise Exception("Point given has no_data value")
     
     # transform time to utc
     ams_tz = timezone('Europe/Amsterdam')
@@ -64,23 +74,12 @@ def is_sunny(dataset, px, py, dt):
 
     # calculate sun position
     pos_sun = suncalc.get_position(time_utc, px_t, py_t)
-
+    
     # read z-data into numpy array
     data = dataset.read(1)
 
-    # get index of raster cell that contains view point
-    pr = dataset.index(px, py)
-
-    # check if view point is inside raster extend
-    if (pr[0] >= dataset.height) | (pr[1] >= dataset.width) | (pr[0] < 0) | (pr[1] < 0):
-        raise Exception('Point given is outside the extent of the dataset')
-
     # read z value for viewpoint
     z0 = data[pr]
-
-    # raster has no data at view point
-    if dataset.dataset_mask()[pr] == 0:
-        raise Exception('Point given has no_data value')
 
     # altitude <= 0  => night
     if pos_sun['altitude'] <= 0:
@@ -96,7 +95,7 @@ def is_sunny(dataset, px, py, dt):
     shapes = [({'type':'LineString', 'coordinates':[(px, py), (px2,py2)]}, 1)]
     re = features.rasterize(shapes, out_shape=dataset.shape, all_touched=True, transform=dataset.transform)
 
-    # find all point indices where 
+    # find all point indices for intersected raster blocks; filter view point block
     pi = np.argwhere(re)
     pi = pi[~np.all(pi==pr, axis=1)]
 
@@ -105,8 +104,8 @@ def is_sunny(dataset, px, py, dt):
         return True
         
     # get dtm height for intersection blocks and replace no-data values by minimum of grid
-    zi = np.array([data[p[0],p[1]] for p in pi])
-    zi[zi > 10000] = data.min() # no object/terrain higher than 10.000m
+    zi = np.array([data[p[0], p[1]] for p in pi])
+    zi[zi > 10000] = data.min() # no object/terrain on earth higher than 10.000m; no-data values higher
 
     # get intersection block midpoints from intersection indices
     pix, piy = dataset.xy(pi[:,0], pi[:,1])
@@ -114,7 +113,7 @@ def is_sunny(dataset, px, py, dt):
     # get raster resolution
     res = dataset.res
 
-    # intersection points of in-line-blocks with ray
+    # calculate intersection points of in-line-blocks with ray
     pin = []
     for ix, iy in zip(pix, piy):
         # get box corners
