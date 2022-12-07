@@ -2,6 +2,7 @@
 #-- hw02 GEO1015.2022
 #-- [Malte Schade]
 #-- [5850282] 
+#-- corrected Version
 
 from datetime import datetime
 from pytz import timezone
@@ -73,7 +74,7 @@ def is_sunny(dataset, px, py, dt):
     px_t, py_t = transfo.transform(px, py)
 
     # calculate sun position
-    pos_sun = suncalc.get_position(time_utc, px_t, py_t) # very different results to online ressources! 
+    pos_sun = suncalc.get_position(time_utc, py_t, px_t)
     
     # read z-data into numpy array
     data = dataset.read(1)
@@ -148,6 +149,5 @@ def is_sunny(dataset, px, py, dt):
 
     # check if all values True
     result = np.all(comp)
-
     return result
 
